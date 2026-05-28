@@ -1131,7 +1131,9 @@ function toggleCompare(id,add){
     compareList = compareList.filter(i=>i!==id);
   }
   updateCompareUI();
-  filterCars();
+  // Toggle card highlight without re-rendering the whole grid
+  const card = document.querySelector(`.car-card[data-id="${id}"]`);
+  if(card) card.classList.toggle('compare-selected', add);
 }
 
 function updateCompareUI(){
