@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparateur Auto Maroc</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-primary:#0a0a14;
+  --bg-secondary:#12122a;
+  --bg-card:#1a1a3e;
+  --bg-card-hover:#222250;
+  --purple-primary:#7c3aed;
+  --purple-secondary:#6366f1;
+  --purple-glow:rgba(124,58,237,0.3);
+  --purple-light:#a78bfa;
+  --text-primary:#f1f5f9;
+  --text-secondary:#94a3b8;
+  --text-muted:#64748b;
+  --success:#22c55e;
+  --warning:#eab308;
+  --danger:#ef4444;
+  --info:#3b82f6;
+  --border:rgba(124,58,237,0.15);
+  --shadow:0 4px 20px rgba(0,0,0,0.3);
+  --radius:12px;
+  --radius-sm:8px
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,sans-serif;
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  min-height:100vh
+}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg-primary)}
+::-webkit-scrollbar-thumb{background:var(--purple-primary);border-radius:3px}
+
+/* Header */
+.header{
+  background:linear-gradient(135deg,#0a0a14 0%,#1a1a3e 50%,#0a0a14 100%);
+  border-bottom:1px solid var(--border);
+  padding:1rem 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(12px);
+}
+.header-logo{
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  font-size:1.25rem;
+  font-weight:700;
+  color:var(--purple-light)
+}
+.header-logo i{color:var(--purple-primary);font-size:1.5rem}
+.header-actions{display:flex;align-items:center;gap:1rem}
+.header-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text-secondary);
+  padding:0.5rem 1rem;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  font-size:0.875rem;
+  transition:all .2s
+}
+.header-btn:hover{background:var(--purple-primary);color:#fff;border-color:var(--purple-primary)}
+.header-btn.active{background:var(--purple-primary);color:#fff;border-color:var(--purple-primary)}
+.hero{
+  text-align:center;
+  padding:3rem 2rem 2rem;
+  background:linear-gradient(180deg,rgba(124,58,237,0.08) 0%,transparent 100%)
+}
+.hero h1{font-size:2rem;margin-bottom:0.5rem;background:linear-gradient(135deg,#a78bfa,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text-secondary);font-size:1rem}
+
+/* Filter Section */
+.filters{
+  padding:1.5rem 2rem;
+  background:var(--bg-secondary);
+  border-bottom:1px solid var(--border);
+}
+.filter-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.75rem;
+  align-items:center;
+}
+.filter-group{
+  position:relative;
+}
+.filter-group label{
+  display:block;
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--text-muted);
+  margin-bottom:0.25rem
+}
+.filter-search{
+  position:relative;
+  flex:1;
+  min-width:220px;
+}
+.filter-search i{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--text-muted);
+  font-size:0.875rem
+}
+.filter-search input{
+  width:100%;
+  padding:0.6rem 0.8rem 0.6rem 2.2rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  color:var(--text-primary);
+  font-size:0.875rem;
+  transition:all .2s
+}
+.filter-search input:focus{outline:none;border-color:var(--purple-primary);box-shadow:0 0 0 3px var(--purple-glow)}
+select,.multi-select-trigger{
+  padding:0.6rem 1.8rem 0.6rem 0.8rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  color:var(--text-primary);
+  font-size:0.8rem;
+  cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
+  transition:all .2s;
+  min-width:120px;
+}
+select:focus{outline:none;border-color:var(--purple-primary);box-shadow:0 0 0 3px var(--purple-glow)}
+.price-range{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  color:var(--text-secondary);
+  font-size:0.8rem;
+}
+.price-range input[type=range]{
+  width:160px;
+  height:4px;
+  -webkit-appearance:none;
+  background:var(--bg-card);
+  border-radius:2px;
+  outline:none
+}
+.price-range input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:16px;
+  height:16px;
+  background:var(--purple-primary);
+  border-radius:50%;
+  cursor:pointer;
+  box-shadow:0 0 8px var(--purple-glow)
+}
+.filter-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:0.35rem;
+  background:var(--purple-primary);
+  color:#fff;
+  font-size:0.7rem;
+  padding:0.2rem 0.5rem;
+  border-radius:999px
+}
+.filter-badge i{cursor:pointer;font-size:0.6rem}
+.clear-filters{
+  color:var(--text-muted);
+  font-size:0.8rem;
+  cursor:pointer;
+  text-decoration:underline;
+  padding:0.4rem 0.6rem;
+  border:none;
+  background:none
+}
+.clear-filters:hover{color:var(--danger)}
+
+/* Stats Bar */
+.stats-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+  padding:1rem 2rem;
+  background:var(--bg-primary);
+  border-bottom:1px solid var(--border);
+}
+.stat-item{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:0.5rem 1rem;
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  font-size:0.8rem;
+}
+.stat-item i{color:var(--purple-primary);font-size:0.9rem}
+.stat-item .stat-label{color:var(--text-muted)}
+.stat-item .stat-value{color:var(--purple-light);font-weight:600}
+
+/* Sort & View Controls */
+.controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0.75rem 2rem;
+  background:var(--bg-primary);
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+  gap:0.5rem;
+}
+.control-left{display:flex;align-items:center;gap:0.75rem}
+.control-left span{font-size:0.8rem;color:var(--text-secondary)}
+.sort-select{
+  padding:0.4rem 1.8rem 0.4rem 0.6rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  color:var(--text-primary);
+  font-size:0.8rem;
+  cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 6px center;
+}
+.compare-btn{
+  background:linear-gradient(135deg,var(--purple-primary),var(--purple-secondary));
+  color:#fff;
+  border:none;
+  padding:0.5rem 1rem;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  font-size:0.8rem;
+  font-weight:600;
+  transition:all .2s;
+  display:flex;
+  align-items:center;
+  gap:0.4rem;
+}
+.compare-btn:disabled{opacity:0.4;cursor:not-allowed}
+.compare-btn:not(:disabled):hover{box-shadow:0 0 20px var(--purple-glow);transform:translateY(-1px)}
+.compare-count{
+  background:rgba(255,255,255,0.2);
+  border-radius:999px;
+  padding:0.1rem 0.5rem;
+  font-size:0.7rem;
+}
+
+/* Car Grid */
+.car-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1rem;
+  padding:1.5rem 2rem;
+}
+.car-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  cursor:pointer;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+.car-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 30px rgba(124,58,237,0.2);
+  border-color:var(--purple-primary);
+}
+.car-card.compare-selected{border-color:var(--success);box-shadow:0 0 15px rgba(34,197,94,0.2)}
+.car-card-img{
+  width:100%;
+  height:180px;
+  background:linear-gradient(135deg,#1a1a3e,#2a2a5e);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+.car-card-img .car-icon{font-size:3.5rem;color:var(--purple-light);opacity:0.6}
+.car-card-img .fuel-badge{
+  position:absolute;
+  top:10px;
+  right:10px;
+  padding:0.25rem 0.6rem;
+  border-radius:999px;
+  font-size:0.65rem;
+  font-weight:600;
+  text-transform:uppercase;
+}
+.fuel-gasoline{background:rgba(234,179,8,0.2);color:#eab308}
+.fuel-diesel{background:rgba(34,197,94,0.2);color:#22c55e}
+.fuel-electric{background:rgba(59,130,246,0.2);color:#3b82f6}
+.fuel-hybrid{background:rgba(168,85,247,0.2);color:#a78bfa}
+.car-card .compare-check{
+  position:absolute;
+  top:10px;
+  left:10px;
+  z-index:5;
+}
+.car-card .compare-check input{
+  width:18px;
+  height:18px;
+  accent-color:var(--purple-primary);
+  cursor:pointer;
+}
+.car-card .favorite-btn{
+  position:absolute;
+  top:10px;
+  left:40px;
+  background:rgba(0,0,0,0.4);
+  border:none;
+  color:var(--text-secondary);
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .2s;
+  z-index:5;
+  font-size:0.8rem;
+}
+.car-card .favorite-btn.active{color:var(--danger)}
+.car-card .favorite-btn:hover{background:rgba(0,0,0,0.6);color:var(--danger)}
+.car-card-body{
+  padding:1rem;
+}
+.car-card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:0.5rem;
+}
+.car-card-name h3{font-size:1rem;font-weight:600;color:var(--text-primary)}
+.car-card-name .car-brand-model{font-size:0.7rem;color:var(--text-muted)}
+.car-card-price{font-size:1.1rem;font-weight:700;color:var(--purple-light);white-space:nowrap}
+.car-card-specs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0.5rem;
+  margin-top:0.5rem;
+  padding-top:0.5rem;
+  border-top:1px solid var(--border);
+}
+.car-spec-item{
+  text-align:center;
+}
+.car-spec-item .spec-value{
+  font-size:0.8rem;
+  font-weight:600;
+  color:var(--text-primary);
+}
+.car-spec-item .spec-label{
+  font-size:0.6rem;
+  color:var(--text-muted);
+  text-transform:uppercase;
+}
+.car-card-rating{
+  display:flex;
+  gap:0.6rem;
+  margin-top:0.5rem;
+  padding-top:0.5rem;
+  border-top:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.rating-dot{
+  display:flex;
+  align-items:center;
+  gap:0.2rem;
+  font-size:0.65rem;
+  color:var(--text-muted);
+}
+.rating-dot i{color:var(--warning);font-size:0.55rem}
+
+/* Detail View */
+.detail-overlay{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(8px);
+  z-index:200;
+  display:none;
+  justify-content:center;
+  align-items:flex-start;
+  padding:2rem;
+  overflow-y:auto;
+}
+.detail-overlay.open{display:flex}
+.detail-modal{
+  background:var(--bg-secondary);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  max-width:800px;
+  width:100%;
+  margin:auto;
+  max-height:90vh;
+  overflow-y:auto;
+  animation:slideUp .3s ease;
+}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.detail-close{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:var(--bg-secondary);
+  padding:1rem;
+  display:flex;
+  justify-content:flex-end;
+}
+.detail-close button{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  color:var(--text-secondary);
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:1rem;
+  transition:all .2s;
+}
+.detail-close button:hover{background:var(--danger);color:#fff;}
+.detail-content{padding:0 1.5rem 1.5rem}
+.detail-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:1.5rem;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+.detail-title h2{font-size:1.5rem}
+.detail-title .detail-tags{display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap}
+.detail-price{font-size:1.5rem;font-weight:700;color:var(--purple-light)}
+.detail-visual{
+  width:100%;
+  height:220px;
+  background:linear-gradient(135deg,#1a1a3e,#2a2a5e);
+  border-radius:var(--radius);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:1.5rem;
+}
+.detail-visual i{font-size:5rem;color:var(--purple-light);opacity:0.5}
+.detail-specs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:0.75rem;
+  margin-bottom:1.5rem;
+}
+.detail-spec{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:0.75rem;
+}
+.detail-spec .spec-label{
+  font-size:0.65rem;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+}
+.detail-spec .spec-value{
+  font-size:0.9rem;
+  font-weight:600;
+  margin-top:0.25rem;
+}
+.detail-ratings{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:0.5rem;
+  margin-bottom:1.5rem;
+}
+.rating-bar{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:0.6rem;
+}
+.rating-bar .rating-label{font-size:0.7rem;color:var(--text-muted)}
+.rating-bar .rating-bar-fill{
+  height:6px;
+  background:var(--bg-primary);
+  border-radius:3px;
+  margin-top:0.3rem;
+  overflow:hidden;
+}
+.rating-bar .rating-bar-fill div{
+  height:100%;
+  border-radius:3px;
+  transition:width .6s ease;
+}
+.rating-perf{background:linear-gradient(90deg,#ef4444,#f97316)}
+.rating-comfort{background:linear-gradient(90deg,#22c55e,#16a34a)}
+.rating-safety{background:linear-gradient(90deg,#3b82f6,#6366f1)}
+.rating-economy{background:linear-gradient(90deg,#eab308,#f59e0b)}
+.rating-value{background:linear-gradient(90deg,#a78bfa,#7c3aed)}
+.detail-features{
+  margin-top:1rem;
+}
+.detail-features h3{
+  font-size:0.9rem;
+  color:var(--text-secondary);
+  margin-bottom:0.75rem;
+}
+.detail-features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:0.5rem;
+}
+.feature-tag{
+  display:flex;
+  align-items:center;
+  gap:0.4rem;
+  font-size:0.78rem;
+  color:var(--text-secondary);
+  padding:0.35rem 0.6rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+}
+.feature-tag i{color:var(--success);font-size:0.65rem}
+
+/* Compare View */
+.compare-overlay{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(8px);
+  z-index:200;
+  display:none;
+  padding:2rem;
+  overflow-y:auto;
+}
+.compare-overlay.open{display:block}
+.compare-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:1.5rem;
+  flex-wrap:wrap;
+  gap:0.75rem;
+}
+.compare-header h2{font-size:1.3rem;color:var(--purple-light)}
+.compare-close{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  color:var(--text-secondary);
+  padding:0.5rem 1rem;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  transition:all .2s;
+}
+.compare-close:hover{background:var(--danger);color:#fff}
+.compare-table-wrap{
+  overflow-x:auto;
+  background:var(--bg-secondary);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+}
+.compare-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:600px;
+}
+.compare-table th,.compare-table td{
+  padding:0.75rem;
+  text-align:center;
+  font-size:0.8rem;
+  border-bottom:1px solid var(--border);
+}
+.compare-table th{
+  background:var(--bg-card);
+  font-weight:600;
+  color:var(--purple-light);
+}
+.compare-table th:first-child,.compare-table td:first-child{
+  text-align:left;
+  font-weight:600;
+  color:var(--text-secondary);
+  background:var(--bg-card);
+  position:sticky;
+  left:0;
+  z-index:2;
+  min-width:130px;
+}
+.compare-table td:first-child{font-size:0.7rem;color:var(--text-muted)}
+.compare-table td{color:var(--text-primary)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .best-val{color:var(--success);font-weight:700}
+.compare-table .worst-val{color:var(--danger)}
+.compare-table .car-col-name i{margin-right:0.3rem}
+.compare-none{text-align:center;padding:3rem;color:var(--text-muted)}
+
+/* Favorites Sidebar */
+.fav-panel{
+  position:fixed;
+  top:0;right:-320px;
+  width:300px;
+  height:100vh;
+  background:var(--bg-secondary);
+  border-left:1px solid var(--border);
+  z-index:150;
+  transition:right .3s ease;
+  overflow-y:auto;
+  padding:1rem;
+}
+.fav-panel.open{right:0}
+.fav-panel-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:1rem;
+}
+.fav-panel-header h3{font-size:1rem;color:var(--purple-light)}
+.fav-panel-header button{
+  background:none;
+  border:none;
+  color:var(--text-muted);
+  cursor:pointer;
+  font-size:0.8rem;
+}
+.fav-panel-header button:hover{color:var(--danger)}
+.fav-panel-item{
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.6rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  margin-bottom:0.5rem;
+  cursor:pointer;
+  transition:all .2s;
+}
+.fav-panel-item:hover{border-color:var(--purple-primary)}
+.fav-panel-item .fav-icon{font-size:1.2rem;color:var(--purple-light)}
+.fav-panel-item .fav-info{flex:1;min-width:0}
+.fav-panel-item .fav-info .fav-name{font-size:0.8rem;font-weight:600}
+.fav-panel-item .fav-info .fav-price{font-size:0.7rem;color:var(--text-muted)}
+.fav-panel-item .fav-remove{color:var(--text-muted);cursor:pointer;font-size:0.7rem}
+.fav-panel-item .fav-remove:hover{color:var(--danger)}
+
+/* Recently Viewed */
+.recent-bar{
+  padding:0 2rem 1rem;
+  display:none;
+}
+.recent-bar.show{display:block}
+.recent-bar h4{
+  font-size:0.8rem;
+  color:var(--text-muted);
+  margin-bottom:0.5rem;
+}
+.recent-items{
+  display:flex;
+  gap:0.5rem;
+  overflow-x:auto;
+  padding-bottom:0.5rem;
+}
+.recent-chip{
+  display:flex;
+  align-items:center;
+  gap:0.3rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:0.3rem 0.8rem;
+  font-size:0.75rem;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .2s;
+  color:var(--text-secondary);
+}
+.recent-chip:hover{border-color:var(--purple-primary);color:var(--purple-light)}
+.recent-chip i{font-size:0.6rem;color:var(--purple-primary)}
+
+/* Backdrop */
+.backdrop{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.5);
+  z-index:140;
+  display:none;
+}
+.backdrop.show{display:block}
+
+/* Toast */
+.toast{
+  position:fixed;
+  bottom:2rem;
+  right:2rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1rem 1.5rem;
+  color:var(--text-primary);
+  font-size:0.9rem;
+  box-shadow:0 8px 30px rgba(0,0,0,0.4);
+  z-index:300;
+  transform:translateY(100px);
+  opacity:0;
+  transition:all .3s ease;
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast i{font-size:1.1rem}
+.toast.toast-success i{color:var(--success)}
+.toast.toast-error i{color:var(--danger)}
+
+/* Empty State */
+.empty-state{
+  grid-column:1/-1;
+  text-align:center;
+  padding:4rem 2rem;
+}
+.empty-state i{font-size:3rem;color:var(--text-muted);margin-bottom:1rem}
+.empty-state h3{font-size:1.1rem;color:var(--text-secondary);margin-bottom:0.5rem}
+.empty-state p{color:var(--text-muted);font-size:0.9rem}
+
+/* Animations */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.car-card{animation:fadeIn .4s ease forwards}
+.car-card:nth-child(n){animation-delay:calc(var(--i,0)*0.05s)}
+
+/* No results badge */
+.no-results{display:none}
+
+/* Responsive */
+@media(max-width:768px){
+  .header{padding:0.75rem 1rem}
+  .header-logo{font-size:1rem}
+  .hero{padding:2rem 1rem 1.5rem}
+  .hero h1{font-size:1.5rem}
+  .filters{padding:1rem}
+  .filter-row{gap:0.5rem}
+  .filter-search{min-width:100%}
+  select,.multi-select-trigger{min-width:100px;font-size:0.75rem}
+  .price-range input[type=range]{width:100px}
+  .stats-bar{padding:0.75rem 1rem;gap:0.5rem}
+  .stat-item{font-size:0.7rem;padding:0.4rem 0.6rem}
+  .controls{padding:0.5rem 1rem;flex-direction:column;align-items:flex-start}
+  .car-grid{padding:1rem;grid-template-columns:1fr}
+  .detail-overlay{padding:0.5rem}
+  .compare-overlay{padding:0.5rem}
+  .detail-specs-grid{grid-template-columns:repeat(2,1fr)}
+  .fav-panel{width:280px}
+  .header-actions{gap:0.5rem}
+  .header-btn{padding:0.4rem 0.6rem;font-size:0.75rem}
+}
+@media(max-width:480px){
+  .car-grid{grid-template-columns:1fr}
+  .detail-specs-grid{grid-template-columns:1fr}
+  .controls{flex-direction:column;align-items:stretch}
+  .control-left{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-logo">
+    <i class="fas fa-car"></i>
+    <span>Comparateur Auto Maroc</span>
+  </div>
+  <div class="header-actions">
+    <button class="header-btn" onclick="openFavorites()"><i class="fas fa-heart"></i> <span class="fav-count-badge" id="favCountBadge">0</span></button>
+    <button class="header-btn" onclick="document.querySelector('.car-grid').scrollIntoView({behavior:'smooth'})"><i class="fas fa-th-large"></i> Voitures</button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>🚗 Trouvez la voiture idéale</h1>
+  <p>Comparez les meilleures voitures disponibles au Maroc — caractéristiques, prix, performances</p>
+</section>
+
+<!-- Filters -->
+<section class="filters">
+  <div class="filter-row">
+    <div class="filter-search">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Rechercher une marque ou modèle..." oninput="filterCars()">
+    </div>
+    <div class="filter-group">
+      <label>Marque</label>
+      <select id="brandFilter" onchange="filterCars()">
+        <option value="">Toutes les marques</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Type</label>
+      <select id="bodyFilter" onchange="filterCars()">
+        <option value="">Tous les types</option>
+        <option value="SUV">SUV</option>
+        <option value="Berline">Berline</option>
+        <option value="Citadine">Citadine</option>
+        <option value="Break">Break</option>
+        <option value="Coupé">Coupé</option>
+        <option value="Monospace">Monospace</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Carburant</label>
+      <select id="fuelFilter" onchange="filterCars()">
+        <option value="">Tous</option>
+        <option value="Essence">Essence</option>
+        <option value="Diesel">Diesel</option>
+        <option value="Hybride">Hybride</option>
+        <option value="Électrique">Électrique</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Transmission</label>
+      <select id="transmissionFilter" onchange="filterCars()">
+        <option value="">Toutes</option>
+        <option value="Manuelle">Manuelle</option>
+        <option value="Automatique">Automatique</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Budget max</label>
+      <div class="price-range">
+        <span id="priceLabel">1 000 000 DH</span>
+        <input type="range" id="priceFilter" min="100000" max="2000000" step="50000" value="2000000" oninput="updatePriceLabel();filterCars()">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="stats-bar" id="statsBar">
+  <div class="stat-item"><i class="fas fa-bolt"></i><span class="stat-label">Plus puissant:</span><span class="stat-value" id="statPowerful">—</span></div>
+  <div class="stat-item"><i class="fas fa-leaf"></i><span class="stat-label">+ économique:</span><span class="stat-value" id="statEconomical">—</span></div>
+  <div class="stat-item"><i class="fas fa-arrow-down"></i><span class="stat-label">- cher:</span><span class="stat-value" id="statCheapest">—</span></div>
+  <div class="stat-item"><i class="fas fa-arrow-up"></i><span class="stat-label">+ cher:</span><span class="stat-value" id="statExpensive">—</span></div>
+</section>
+
+<!-- Controls -->
+<section class="controls">
+  <div class="control-left">
+    <span><span id="resultCount">0</span> résultats</span>
+    <select class="sort-select" id="sortSelect" onchange="filterCars()">
+      <option value="default">Par défaut</option>
+      <option value="price-asc">Prix ↑</option>
+      <option value="price-desc">Prix ↓</option>
+      <option value="power-desc">Puissance ↓</option>
+      <option value="consumption-asc">Conso. ↑</option>
+      <option value="acceleration-asc">Accélération ↑</option>
+    </select>
+  </div>
+  <div>
+    <button class="compare-btn" id="compareBtn" onclick="openCompare()" disabled>
+      <i class="fas fa-balance-scale"></i> Comparer <span class="compare-count" id="compareCount">0</span>
+    </button>
+  </div>
+</section>
+
+<!-- Car Grid -->
+<section class="car-grid" id="carGrid"></section>
+
+<!-- Recently Viewed -->
+<section class="recent-bar" id="recentBar">
+  <h4><i class="fas fa-history"></i> Récemment consultés</h4>
+  <div class="recent-items" id="recentItems"></div>
+</section>
+
+<!-- Detail Overlay -->
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail-modal" id="detailModal"></div>
+</div>
+
+<!-- Compare Overlay -->
+<div class="compare-overlay" id="compareOverlay">
+  <div class="compare-header">
+    <h2><i class="fas fa-balance-scale"></i> Comparaison détaillée</h2>
+    <button class="compare-close" onclick="closeCompare()"><i class="fas fa-times"></i> Fermer</button>
+  </div>
+  <div id="compareContent"></div>
+</div>
+
+<!-- Favorites Panel -->
+<div class="backdrop" id="favBackdrop" onclick="closeFavorites()"></div>
+<div class="fav-panel" id="favPanel">
+  <div class="fav-panel-header">
+    <h3><i class="fas fa-heart"></i> Mes Favoris</h3>
+    <button onclick="closeFavorites()"><i class="fas fa-times"></i></button>
+  </div>
+  <div id="favList"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Message</span></div>
+
+<script>
+// ========== CAR DATABASE (60+ cars, real Morocco market) ==========
+const cars = [
+  // ---- Budget / Entry ----
+  {id:1,brand:"Dacia",model:"Sandero",year:2025,bodyType:"Citadine",price:145000,engine:"1.0 SCe",horsepower:65,torque:95,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.6,acceleration:14.5,topSpeed:158,seats:5,trunk:328,weight:1050,features:["ABS","ESP","Airbags","AC","Hill Start Assist","Traction Control","LED Headlights","Fog Lights"],ratings:{performance:2.5,comfort:3,safety:3,economy:4.5,value:5}},
+  {id:2,brand:"Dacia",model:"Logan",year:2025,bodyType:"Berline",price:155000,engine:"1.0 SCe",horsepower:65,torque:95,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.5,acceleration:14.2,topSpeed:160,seats:5,trunk:510,weight:1070,features:["ABS","ESP","Airbags","AC","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels"],ratings:{performance:2.5,comfort:3.5,safety:3,economy:4.5,value:4.5}},
+  {id:3,brand:"Dacia",model:"Duster",year:2025,bodyType:"SUV",price:195000,engine:"1.0 TCe",horsepower:90,torque:140,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:6.2,acceleration:11.5,topSpeed:172,seats:5,trunk:445,weight:1200,features:["ABS","ESP","Airbags","AC","Cruise Control","Parking Sensors","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Fog Lights"],ratings:{performance:3,comfort:3.5,safety:3.5,economy:4,value:4.5}},
+  {id:4,brand:"Renault",model:"Clio",year:2025,bodyType:"Citadine",price:165000,engine:"1.0 TCe",horsepower:90,torque:140,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.0,acceleration:11.2,topSpeed:180,seats:5,trunk:300,weight:1055,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Hill Start Assist","Traction Control","LED Headlights"],ratings:{performance:3,comfort:3.5,safety:3.5,economy:4.5,value:4}},
+  {id:5,brand:"Peugeot",model:"208",year:2025,bodyType:"Citadine",price:175000,engine:"1.2 PureTech",horsepower:100,torque:150,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.1,acceleration:10.2,topSpeed:185,seats:5,trunk:309,weight:1090,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:4,value:4}},
+  {id:6,brand:"Citroën",model:"C3",year:2025,bodyType:"Citadine",price:160000,engine:"1.2 PureTech",horsepower:83,torque:118,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.0,acceleration:12.3,topSpeed:170,seats:5,trunk:300,weight:1060,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Hill Start Assist","Traction Control","LED Headlights"],ratings:{performance:3,comfort:4,safety:3.5,economy:4,value:4}},
+  {id:7,brand:"Toyota",model:"Yaris",year:2025,bodyType:"Citadine",price:178000,engine:"1.5 VVT-i",horsepower:111,torque:145,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.2,acceleration:10.6,topSpeed:180,seats:5,trunk:286,weight:1085,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Hill Start Assist","Traction Control"],ratings:{performance:3.5,comfort:3.5,safety:4.5,economy:4,value:4}},
+  {id:8,brand:"Hyundai",model:"i10",year:2025,bodyType:"Citadine",price:140000,engine:"1.0 MPi",horsepower:67,torque:96,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:4.8,acceleration:13.8,topSpeed:155,seats:5,trunk:252,weight:990,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Hill Start Assist","Traction Control"],ratings:{performance:2,comfort:3,safety:3.5,economy:4.5,value:4.5}},
+  {id:9,brand:"Hyundai",model:"i20",year:2025,bodyType:"Citadine",price:165000,engine:"1.2 MPi",horsepower:84,torque:118,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.1,acceleration:12.1,topSpeed:170,seats:5,trunk:301,weight:1060,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Hill Start Assist","Traction Control"],ratings:{performance:3,comfort:3.5,safety:3.5,economy:4,value:4}},
+  {id:10,brand:"Kia",model:"Picanto",year:2025,bodyType:"Citadine",price:138000,engine:"1.0 MPi",horsepower:67,torque:96,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:4.7,acceleration:13.9,topSpeed:155,seats:5,trunk:255,weight:985,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Hill Start Assist","Traction Control"],ratings:{performance:2,comfort:3,safety:3.5,economy:4.5,value:5}},
+  {id:11,brand:"Kia",model:"Rio",year:2025,bodyType:"Citadine",price:172000,engine:"1.2 MPi",horsepower:84,torque:121,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.3,acceleration:12.0,topSpeed:172,seats:5,trunk:303,weight:1080,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Hill Start Assist","Traction Control","Fog Lights"],ratings:{performance:3,comfort:3.5,safety:3.5,economy:4,value:4}},
+  {id:12,brand:"Suzuki",model:"Swift",year:2025,bodyType:"Citadine",price:155000,engine:"1.2 DualJet",horsepower:83,torque:107,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:4.8,acceleration:12.3,topSpeed:170,seats:5,trunk:265,weight:1020,features:["ABS","ESP","Airbags","AC","Apple CarPlay","Android Auto","Cruise Control","Hill Start Assist","Traction Control","LED Headlights"],ratings:{performance:2.5,comfort:3,safety:3.5,economy:4.5,value:4.5}},
+  {id:13,brand:"Fiat",model:"Panda",year:2025,bodyType:"Citadine",price:132000,engine:"1.0 Hybrid",horsepower:70,torque:92,fuelType:"Hybride",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:4.4,acceleration:13.9,topSpeed:155,seats:5,trunk:225,weight:965,features:["ABS","ESP","Airbags","AC","Hill Start Assist","Traction Control","Fog Lights"],ratings:{performance:2,comfort:2.5,safety:3,economy:5,value:4.5}},
+  {id:14,brand:"Fiat",model:"500",year:2025,bodyType:"Citadine",price:158000,engine:"1.2 Fire",horsepower:69,torque:102,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.1,acceleration:13.0,topSpeed:160,seats:4,trunk:185,weight:940,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Parking Sensors","Hill Start Assist","Traction Control","Alloy Wheels"],ratings:{performance:2,comfort:3,safety:3,economy:3.5,value:3.5}},
+  {id:15,brand:"MG",model:"ZS",year:2025,bodyType:"SUV",price:185000,engine:"1.5 VTi",horsepower:106,torque:141,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:6.3,acceleration:10.5,topSpeed:175,seats:5,trunk:448,weight:1280,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels"],ratings:{performance:3,comfort:3.5,safety:3.5,economy:3.5,value:4.5}},
+  {id:16,brand:"Volkswagen",model:"Polo",year:2025,bodyType:"Citadine",price:195000,engine:"1.0 TSI",horsepower:95,torque:160,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.2,acceleration:10.8,topSpeed:185,seats:5,trunk:351,weight:1105,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:4,value:3.5}},
+  {id:17,brand:"Dacia",model:"Spring",year:2025,bodyType:"Citadine",price:185000,engine:"Moteur électrique",horsepower:44,torque:125,fuelType:"Électrique",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:0,acceleration:13.7,topSpeed:125,seats:5,trunk:290,weight:975,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Hill Start Assist","Traction Control","LED Headlights"],ratings:{performance:1.5,comfort:2.5,safety:3,economy:5,value:4}},
+  {id:18,brand:"Renault",model:"Twingo",year:2025,bodyType:"Citadine",price:148000,engine:"1.0 SCe",horsepower:65,torque:95,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.0,acceleration:14.5,topSpeed:155,seats:4,trunk:188,weight:945,features:["ABS","ESP","Airbags","AC","Hill Start Assist","Traction Control"],ratings:{performance:2,comfort:2.5,safety:3,economy:4,value:4}},
+  // ---- Mid-Range ----
+  {id:19,brand:"Toyota",model:"Corolla",year:2025,bodyType:"Berline",price:265000,engine:"1.8 Hybrid",horsepower:140,torque:163,fuelType:"Hybride",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:3.8,acceleration:9.2,topSpeed:190,seats:5,trunk:470,weight:1370,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:4,safety:4.5,economy:5,value:4.5}},
+  {id:20,brand:"Hyundai",model:"Elantra",year:2025,bodyType:"Berline",price:240000,engine:"2.0 MPi",horsepower:147,torque:179,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.5,acceleration:9.0,topSpeed:200,seats:5,trunk:473,weight:1280,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:4,safety:4,economy:3.5,value:4.5}},
+  {id:21,brand:"Hyundai",model:"Tucson",year:2025,bodyType:"SUV",price:310000,engine:"1.6 T-GDi",horsepower:180,torque:265,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.8,acceleration:8.3,topSpeed:205,seats:5,trunk:558,weight:1505,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:4,comfort:4,safety:4.5,economy:3.5,value:4}},
+  {id:22,brand:"Kia",model:"Cerato",year:2025,bodyType:"Berline",price:230000,engine:"2.0 MPi",horsepower:152,torque:192,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.6,acceleration:8.8,topSpeed:200,seats:5,trunk:421,weight:1290,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:3.5,value:4.5}},
+  {id:23,brand:"Kia",model:"Sportage",year:2025,bodyType:"SUV",price:320000,engine:"1.6 T-GDi",horsepower:180,torque:265,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.9,acceleration:8.4,topSpeed:205,seats:5,trunk:565,weight:1520,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Heated Seats"],ratings:{performance:4,comfort:4.5,safety:4.5,economy:3.5,value:4}},
+  {id:24,brand:"Peugeot",model:"2008",year:2025,bodyType:"SUV",price:265000,engine:"1.2 PureTech",horsepower:130,torque:230,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.6,acceleration:9.4,topSpeed:196,seats:5,trunk:434,weight:1260,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:4,value:4}},
+  {id:25,brand:"Peugeot",model:"3008",year:2025,bodyType:"SUV",price:340000,engine:"1.2 PureTech",horsepower:130,torque:230,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.8,acceleration:10.2,topSpeed:190,seats:5,trunk:591,weight:1420,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Fog Lights"],ratings:{performance:3.5,comfort:4,safety:4,economy:4,value:3.5}},
+  {id:26,brand:"Renault",model:"Captur",year:2025,bodyType:"SUV",price:240000,engine:"1.0 TCe",horsepower:115,torque:190,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.5,acceleration:10.6,topSpeed:185,seats:5,trunk:422,weight:1205,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels"],ratings:{performance:3,comfort:3.5,safety:3.5,economy:4,value:4}},
+  {id:27,brand:"Renault",model:"Arkana",year:2025,bodyType:"SUV",price:285000,engine:"1.3 TCe",horsepower:155,torque:270,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.9,acceleration:8.9,topSpeed:205,seats:5,trunk:480,weight:1360,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Sunroof"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:3.5,value:4}},
+  {id:28,brand:"Dacia",model:"Jogger",year:2025,bodyType:"Monospace",price:185000,engine:"1.0 TCe",horsepower:110,torque:200,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:6.2,acceleration:11.2,topSpeed:180,seats:7,trunk:607,weight:1220,features:["ABS","ESP","Airbags","AC","Cruise Control","Parking Sensors","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Fog Lights"],ratings:{performance:3,comfort:3.5,safety:3.5,economy:3.5,value:5}},
+  {id:29,brand:"Volkswagen",model:"T-Cross",year:2025,bodyType:"SUV",price:235000,engine:"1.0 TSI",horsepower:95,torque:160,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.4,acceleration:10.8,topSpeed:182,seats:5,trunk:385,weight:1190,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights"],ratings:{performance:3,comfort:3.5,safety:3.5,economy:4,value:3.5}},
+  {id:30,brand:"Volkswagen",model:"Taigo",year:2025,bodyType:"SUV",price:260000,engine:"1.0 TSI",horsepower:110,torque:200,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.5,acceleration:10.2,topSpeed:190,seats:5,trunk:385,weight:1220,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels"],ratings:{performance:3.5,comfort:3.5,safety:3.5,economy:4,value:3.5}},
+  {id:31,brand:"Seat",model:"Leon",year:2025,bodyType:"Citadine",price:255000,engine:"1.0 TSI",horsepower:110,torque:200,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.3,acceleration:9.8,topSpeed:196,seats:5,trunk:380,weight:1225,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:4,value:3.5}},
+  {id:32,brand:"Seat",model:"Arona",year:2025,bodyType:"SUV",price:230000,engine:"1.0 TSI",horsepower:110,torque:200,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.3,acceleration:10.0,topSpeed:185,seats:5,trunk:400,weight:1185,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels"],ratings:{performance:3.5,comfort:3.5,safety:3.5,economy:4,value:4}},
+  {id:33,brand:"Nissan",model:"Qashqai",year:2025,bodyType:"SUV",price:300000,engine:"1.3 DiG-T",horsepower:140,torque:240,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.0,acceleration:9.5,topSpeed:198,seats:5,trunk:504,weight:1370,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:4,safety:4.5,economy:3.5,value:3.5}},
+  {id:34,brand:"Ford",model:"Puma",year:2025,bodyType:"SUV",price:250000,engine:"1.0 EcoBoost",horsepower:125,torque:200,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.3,acceleration:9.5,topSpeed:190,seats:5,trunk:456,weight:1220,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:4,value:4}},
+  {id:35,brand:"Ford",model:"Focus",year:2025,bodyType:"Citadine",price:245000,engine:"1.0 EcoBoost",horsepower:125,torque:200,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.5,acceleration:9.3,topSpeed:195,seats:5,trunk:375,weight:1265,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:3.5,value:3.5}},
+  {id:36,brand:"Skoda",model:"Octavia",year:2025,bodyType:"Berline",price:275000,engine:"1.5 TSI",horsepower:150,torque:250,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.4,acceleration:8.3,topSpeed:220,seats:5,trunk:600,weight:1340,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Fog Lights"],ratings:{performance:4,comfort:4,safety:4,economy:4,value:4.5}},
+  {id:37,brand:"Skoda",model:"Kamiq",year:2025,bodyType:"SUV",price:240000,engine:"1.0 TSI",horsepower:110,torque:200,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.2,acceleration:9.8,topSpeed:192,seats:5,trunk:400,weight:1190,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:4.5,value:4}},
+  {id:38,brand:"Opel",model:"Corsa",year:2025,bodyType:"Citadine",price:190000,engine:"1.2 Turbo",horsepower:100,torque:205,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.2,acceleration:10.0,topSpeed:188,seats:5,trunk:281,weight:1070,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels"],ratings:{performance:3,comfort:3.5,safety:3.5,economy:4,value:4}},
+  {id:39,brand:"Mazda",model:"2",year:2025,bodyType:"Citadine",price:175000,engine:"1.5 Skyactiv-G",horsepower:90,torque:148,fuelType:"Essence",transmission:"Manuelle",drivetrain:"Traction",fuelConsumption:5.0,acceleration:11.5,topSpeed:180,seats:5,trunk:280,weight:1030,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels"],ratings:{performance:3,comfort:3,safety:3.5,economy:4.5,value:4}},
+  {id:40,brand:"Mazda",model:"3",year:2025,bodyType:"Berline",price:275000,engine:"2.0 Skyactiv-G",horsepower:150,torque:213,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.0,acceleration:8.8,topSpeed:207,seats:5,trunk:351,weight:1320,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:4,comfort:3.5,safety:4,economy:3.5,value:3.5}},
+  {id:41,brand:"Honda",model:"Civic",year:2025,bodyType:"Berline",price:285000,engine:"1.5 VTEC Turbo",horsepower:182,torque:240,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.2,acceleration:7.6,topSpeed:210,seats:5,trunk:460,weight:1310,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:4.5,comfort:3.5,safety:4.5,economy:3.5,value:3.5}},
+  {id:42,brand:"Peugeot",model:"308",year:2025,bodyType:"Citadine",price:265000,engine:"1.2 PureTech",horsepower:130,torque:230,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.5,acceleration:9.3,topSpeed:200,seats:5,trunk:412,weight:1260,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:4,value:3.5}},
+  {id:43,brand:"Citroën",model:"C4",year:2025,bodyType:"Citadine",price:235000,engine:"1.2 PureTech",horsepower:130,torque:230,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.5,acceleration:9.2,topSpeed:200,seats:5,trunk:380,weight:1290,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:4.5,safety:3.5,economy:4,value:4}},
+  // ---- Premium ----
+  {id:44,brand:"BMW",model:"Série 1",year:2025,bodyType:"Citadine",price:385000,engine:"1.5 Turbo",horsepower:140,torque:220,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.8,acceleration:8.5,topSpeed:215,seats:5,trunk:380,weight:1370,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Leather Seats"],ratings:{performance:4,comfort:3.5,safety:4,economy:3,value:3}},
+  {id:45,brand:"BMW",model:"Série 3",year:2025,bodyType:"Berline",price:520000,engine:"2.0 Turbo",horsepower:184,torque:300,fuelType:"Essence",transmission:"Automatique",drivetrain:"Propulsion",fuelConsumption:6.5,acceleration:7.1,topSpeed:235,seats:5,trunk:480,weight:1490,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Leather Seats","Heated Seats","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:5,comfort:4.5,safety:4.5,economy:2.5,value:3}},
+  {id:46,brand:"BMW",model:"X1",year:2025,bodyType:"SUV",price:420000,engine:"2.0 Turbo",horsepower:150,torque:250,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.3,acceleration:8.2,topSpeed:215,seats:5,trunk:540,weight:1540,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Leather Seats"],ratings:{performance:4,comfort:4,safety:4.5,economy:3,value:3}},
+  {id:47,brand:"Mercedes-Benz",model:"Classe A",year:2025,bodyType:"Citadine",price:380000,engine:"1.3 Turbo",horsepower:136,torque:230,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.9,acceleration:8.2,topSpeed:215,seats:5,trunk:350,weight:1340,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Leather Seats"],ratings:{performance:4,comfort:4,safety:4,economy:3,value:3}},
+  {id:48,brand:"Mercedes-Benz",model:"Classe C",year:2025,bodyType:"Berline",price:540000,engine:"1.5 Turbo",horsepower:170,torque:250,fuelType:"Essence",transmission:"Automatique",drivetrain:"Propulsion",fuelConsumption:6.5,acceleration:7.8,topSpeed:235,seats:5,trunk:455,weight:1500,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Leather Seats","Heated Seats","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:4.5,comfort:5,safety:4.5,economy:2.5,value:2.5}},
+  {id:49,brand:"Mercedes-Benz",model:"GLA",year:2025,bodyType:"SUV",price:410000,engine:"1.3 Turbo",horsepower:136,torque:230,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.0,acceleration:8.7,topSpeed:208,seats:5,trunk:435,weight:1450,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Leather Seats"],ratings:{performance:3.5,comfort:4,safety:4,economy:3,value:3}},
+  {id:50,brand:"Audi",model:"A3",year:2025,bodyType:"Citadine",price:370000,engine:"1.5 TFSI",horsepower:150,torque:250,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.7,acceleration:8.0,topSpeed:220,seats:5,trunk:375,weight:1305,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Leather Seats"],ratings:{performance:4,comfort:4,safety:4,economy:3.5,value:3}},
+  {id:51,brand:"Audi",model:"Q3",year:2025,bodyType:"SUV",price:420000,engine:"1.5 TFSI",horsepower:150,torque:250,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.1,acceleration:8.5,topSpeed:212,seats:5,trunk:530,weight:1490,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Leather Seats"],ratings:{performance:4,comfort:4,safety:4,economy:3,value:3}},
+  {id:52,brand:"Range Rover",model:"Evoque",year:2025,bodyType:"SUV",price:500000,engine:"2.0 Turbo",horsepower:200,torque:320,fuelType:"Essence",transmission:"Automatique",drivetrain:"Intégrale",fuelConsumption:7.5,acceleration:7.5,topSpeed:216,seats:5,trunk:472,weight:1745,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Leather Seats","Heated Seats","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Fog Lights"],ratings:{performance:4.5,comfort:4.5,safety:4.5,economy:2,value:2.5}},
+  {id:53,brand:"Volkswagen",model:"Tiguan",year:2025,bodyType:"SUV",price:350000,engine:"1.5 TSI",horsepower:150,torque:250,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.5,acceleration:8.8,topSpeed:208,seats:5,trunk:615,weight:1550,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:4,safety:4,economy:3.5,value:3.5}},
+  {id:54,brand:"Toyota",model:"RAV4",year:2025,bodyType:"SUV",price:390000,engine:"2.5 Hybrid",horsepower:218,torque:202,fuelType:"Hybride",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:4.8,acceleration:7.8,topSpeed:210,seats:5,trunk:580,weight:1570,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:4,comfort:4,safety:4.5,economy:5,value:4}},
+  {id:55,brand:"Peugeot",model:"5008",year:2025,bodyType:"SUV",price:370000,engine:"1.2 PureTech",horsepower:130,torque:230,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.0,acceleration:10.5,topSpeed:190,seats:7,trunk:702,weight:1480,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Sunroof"],ratings:{performance:3,comfort:4,safety:4,economy:3.5,value:3.5}},
+  {id:56,brand:"DS",model:"DS 7",year:2025,bodyType:"SUV",price:400000,engine:"1.6 PureTech",horsepower:180,torque:250,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.4,acceleration:8.3,topSpeed:215,seats:5,trunk:555,weight:1500,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Leather Seats","Heated Seats","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:4,comfort:4.5,safety:4,economy:3,value:3}},
+  {id:57,brand:"DS",model:"DS 3",year:2025,bodyType:"SUV",price:290000,engine:"1.2 PureTech",horsepower:130,torque:230,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:5.5,acceleration:9.0,topSpeed:200,seats:5,trunk:350,weight:1250,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:4,safety:3.5,economy:3.5,value:3.5}},
+  {id:58,brand:"Volvo",model:"XC40",year:2025,bodyType:"SUV",price:430000,engine:"1.5 Turbo",horsepower:156,torque:265,fuelType:"Essence",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:6.5,acceleration:8.4,topSpeed:200,seats:5,trunk:460,weight:1580,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Leather Seats","Heated Seats"],ratings:{performance:4,comfort:4.5,safety:5,economy:3,value:3}},
+  // ---- Electric / Hybrid ----
+  {id:59,brand:"Tesla",model:"Model 3",year:2025,bodyType:"Berline",price:620000,engine:"Moteur électrique",horsepower:283,torque:420,fuelType:"Électrique",transmission:"Automatique",drivetrain:"Propulsion",fuelConsumption:0,acceleration:5.8,topSpeed:225,seats:5,trunk:542,weight:1690,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Heated Seats","Leather Seats"],ratings:{performance:5,comfort:4,safety:5,economy:5,value:3.5}},
+  {id:60,brand:"Tesla",model:"Model Y",year:2025,bodyType:"SUV",price:680000,engine:"Moteur électrique",horsepower:347,torque:450,fuelType:"Électrique",transmission:"Automatique",drivetrain:"Intégrale",fuelConsumption:0,acceleration:4.8,topSpeed:250,seats:5,trunk:854,weight:1840,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry","Heated Seats","Leather Seats"],ratings:{performance:5,comfort:4,economy:5,safety:5,value:3}},
+  {id:61,brand:"Renault",model:"Megane E-Tech",year:2025,bodyType:"Citadine",price:380000,engine:"Moteur électrique",horsepower:220,torque:300,fuelType:"Électrique",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:0,acceleration:7.4,topSpeed:190,seats:5,trunk:440,weight:1590,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:4.5,comfort:4,safety:4,economy:5,value:3.5}},
+  {id:62,brand:"MG",model:"MG4",year:2025,bodyType:"Citadine",price:290000,engine:"Moteur électrique",horsepower:170,torque:250,fuelType:"Électrique",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:0,acceleration:7.7,topSpeed:185,seats:5,trunk:363,weight:1530,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:4,comfort:3.5,safety:3.5,economy:5,value:4.5}},
+  {id:63,brand:"BYD",model:"Atto 3",year:2025,bodyType:"SUV",price:340000,engine:"Moteur électrique",horsepower:204,torque:310,fuelType:"Électrique",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:0,acceleration:7.3,topSpeed:200,seats:5,trunk:440,weight:1610,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Sunroof","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:4,comfort:3.5,safety:4,economy:5,value:4}},
+  {id:64,brand:"BYD",model:"Dolphin",year:2025,bodyType:"Citadine",price:260000,engine:"Moteur électrique",horsepower:95,torque:180,fuelType:"Électrique",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:0,acceleration:10.5,topSpeed:160,seats:5,trunk:345,weight:1230,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:2.5,comfort:3.5,safety:3.5,economy:5,value:4.5}},
+  {id:65,brand:"Toyota",model:"Corolla Hybrid",year:2025,bodyType:"Berline",price:290000,engine:"1.8 Hybrid",horsepower:140,torque:163,fuelType:"Hybride",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:3.8,acceleration:9.2,topSpeed:190,seats:5,trunk:470,weight:1370,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:4,safety:4.5,economy:5,value:4.5}},
+  {id:66,brand:"Hyundai",model:"Kona Electric",year:2025,bodyType:"SUV",price:360000,engine:"Moteur électrique",horsepower:136,torque:255,fuelType:"Électrique",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:0,acceleration:8.1,topSpeed:185,seats:5,trunk:407,weight:1560,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Blind Spot Monitor","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:5,value:3.5}},
+  {id:67,brand:"Peugeot",model:"e-208",year:2025,bodyType:"Citadine",price:310000,engine:"Moteur électrique",horsepower:136,torque:260,fuelType:"Électrique",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:0,acceleration:8.1,topSpeed:190,seats:5,trunk:309,weight:1455,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Lane Assist","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3.5,comfort:3.5,safety:4,economy:5,value:3.5}},
+  {id:68,brand:"Fiat",model:"500 Électrique",year:2025,bodyType:"Citadine",price:270000,engine:"Moteur électrique",horsepower:118,torque:220,fuelType:"Électrique",transmission:"Automatique",drivetrain:"Traction",fuelConsumption:0,acceleration:9.0,topSpeed:175,seats:4,trunk:185,weight:1290,features:["ABS","ESP","Airbags","AC","Touch Screen","Apple CarPlay","Android Auto","Cruise Control","Parking Sensors","Reversing Camera","Hill Start Assist","Traction Control","LED Headlights","Alloy Wheels","Push Start","Keyless Entry"],ratings:{performance:3,comfort:3,safety:3.5,economy:5,value:3}},
+];
+
+// Global state
+let compareList = [];
+let favorites = JSON.parse(localStorage.getItem('carFavorites') || '[]');
+let recentlyViewed = JSON.parse(sessionStorage.getItem('recentlyViewed') || '[]');
+
+// Format price
+function formatPrice(p){
+  return p.toLocaleString('fr-FR') + ' DH';
+}
+
+// Fuel label
+function fuelLabel(f){
+  if(f==='Électrique')return'Électrique'
+  if(f==='Hybride')return'Hybride'
+  if(f==='Essence')return'Essence'
+  if(f==='Diesel')return'Diesel'
+  return f
+}
+
+// Init filters
+function initFilters(){
+  const brands = [...new Set(cars.map(c=>c.brand))].sort();
+  const sel = document.getElementById('brandFilter');
+  brands.forEach(b=>{
+    const o=document.createElement('option');
+    o.value=b;o.textContent=b;sel.appendChild(o);
+  });
+}
+
+// Render car card
+function renderCar(car){
+  const fe = car.fuelType;
+  const fcls = fe==='Essence'?'fuel-gasoline':fe==='Diesel'?'fuel-diesel':fe==='Électrique'?'fuel-electric':'fuel-hybrid';
+  const fav = favorites.includes(car.id);
+  const comp = compareList.includes(car.id);
+  const icon = car.bodyType==='SUV'?'fa-caravan':car.bodyType==='Berline'?'fa-car':car.bodyType==='Citadine'?'fa-city':car.bodyType==='Break'?'fa-truck':car.bodyType==='Coupé'?'fa-gem':car.bodyType==='Monospace'?'fa-shuttle-van':'fa-car';
+  
+  return `<div class="car-card ${comp?'compare-selected':''}" style="--i:${car.id%20*0.02}s" onclick="showDetail(${car.id})" data-id="${car.id}">
+    <div class="car-card-img">
+      <span class="fuel-badge ${fcls}">${fe==='Électrique'?'⚡':fe==='Hybride'?'🔋':fe==='Diesel'?'⛽':'⛽'} ${fe}</span>
+      <div class="compare-check" onclick="event.stopPropagation()">
+        <input type="checkbox" ${comp?'checked':''} onchange="toggleCompare(${car.id},this.checked)" title="Ajouter à la comparaison">
+      </div>
+      <button class="favorite-btn ${fav?'active':''}" onclick="event.stopPropagation();toggleFavorite(${car.id})" title="Ajouter aux favoris">
+        <i class="${fav?'fas':'far'} fa-heart"></i>
+      </button>
+      <i class="fas ${icon} car-icon"></i>
+    </div>
+    <div class="car-card-body">
+      <div class="car-card-header">
+        <div class="car-card-name">
+          <h3>${car.brand} ${car.model}</h3>
+          <div class="car-brand-model">${car.bodyType} · ${car.engine}</div>
+        </div>
+        <div class="car-card-price">${formatPrice(car.price)}</div>
+      </div>
+      <div class="car-card-specs">
+        <div class="car-spec-item"><div class="spec-value">${car.horsepower}<small>ch</small></div><div class="spec-label">Puissance</div></div>
+        <div class="car-spec-item"><div class="spec-value">${car.acceleration}s</div><div class="spec-label">0-100</div></div>
+        <div class="car-spec-item"><div class="spec-value">${car.fuelConsumption > 0 ? car.fuelConsumption+'L' : '⚡'}</div><div class="spec-label">Conso.</div></div>
+      </div>
+      <div class="car-card-rating">
+        ${['performance','comfort','safety','economy','value'].map(r=>`<span class="rating-dot"><i class="fas fa-star"></i> ${car.ratings[r].toFixed(1)}</span>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+// Filter + sort cars
+function filterCars(){
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  const brand = document.getElementById('brandFilter').value;
+  const body = document.getElementById('bodyFilter').value;
+  const fuel = document.getElementById('fuelFilter').value;
+  const trans = document.getElementById('transmissionFilter').value;
+  const maxPrice = parseInt(document.getElementById('priceFilter').value);
+  const sort = document.getElementById('sortSelect').value;
+
+  let filtered = cars.filter(c=>{
+    if(search && !c.brand.toLowerCase().includes(search) && !c.model.toLowerCase().includes(search)) return false;
+    if(brand && c.brand!==brand)return false;
+    if(body && c.bodyType!==body)return false;
+    if(fuel && c.fuelType!==fuel)return false;
+    if(trans && c.transmission!==trans)return false;
+    if(c.price>maxPrice)return false;
+    return true;
+  });
+
+  switch(sort){
+    case 'price-asc':filtered.sort((a,b)=>a.price-b.price);break;
+    case 'price-desc':filtered.sort((a,b)=>b.price-a.price);break;
+    case 'power-desc':filtered.sort((a,b)=>b.horsepower-a.horsepower);break;
+    case 'consumption-asc':filtered.sort((a,b)=>{
+      const ac = a.fuelConsumption||999,bc = b.fuelConsumption||999;
+      return ac-bc;
+    });break;
+    case 'acceleration-asc':filtered.sort((a,b)=>a.acceleration-b.acceleration);break;
+    default:break;
+  }
+
+  const grid = document.getElementById('carGrid');
+  if(filtered.length===0){
+    grid.innerHTML=`<div class="empty-state"><i class="fas fa-search"></i><h3>Aucun résultat</h3><p>Essayez de modifier vos filtres</p></div>`;
+  } else {
+    grid.innerHTML=filtered.map(renderCar).join('');
+  }
+
+  document.getElementById('resultCount').textContent=filtered.length;
+  updateStats(filtered);
+}
+
+// Stats
+function updateStats(filtered){
+  if(filtered.length===0){['statPowerful','statEconomical','statCheapest','statExpensive'].forEach(id=>document.getElementById(id).textContent='—');return}
+  const p = [...filtered].sort((a,b)=>b.horsepower-a.horsepower)[0];
+  const e = [...filtered].filter(c=>c.fuelConsumption>0).sort((a,b)=>a.fuelConsumption-b.fuelConsumption)[0]||filtered[0];
+  const ch = [...filtered].sort((a,b)=>a.price-b.price)[0];
+  const ex = [...filtered].sort((a,b)=>b.price-a.price)[0];
+  document.getElementById('statPowerful').textContent=`${p.brand} ${p.model} (${p.horsepower}ch)`;
+  document.getElementById('statEconomical').textContent=e?`${e.brand} ${e.model} (${e.fuelConsumption>0?e.fuelConsumption+'L':'⚡'})`:'—';
+  document.getElementById('statCheapest').textContent=`${ch.brand} ${ch.model} (${formatPrice(ch.price)})`;
+  document.getElementById('statExpensive').textContent=`${ex.brand} ${ex.model} (${formatPrice(ex.price)})`;
+}
+
+// Price label
+function updatePriceLabel(){
+  const v = parseInt(document.getElementById('priceFilter').value);
+  document.getElementById('priceLabel').textContent = formatPrice(v);
+}
+
+// Compare
+function toggleCompare(id,add){
+  if(add){
+    if(compareList.length>=4){showToast('Maximum 4 voitures à comparer','error');return}
+    compareList.push(id);
+  } else {
+    compareList = compareList.filter(i=>i!==id);
+  }
+  updateCompareUI();
+  filterCars();
+}
+
+function updateCompareUI(){
+  document.getElementById('compareCount').textContent=compareList.length;
+  const btn=document.getElementById('compareBtn');
+  btn.disabled=compareList.length<2;
+  if(compareList.length>=2){
+    btn.innerHTML=`<i class="fas fa-balance-scale"></i> Comparer (${compareList.length})`;
+  } else {
+    btn.innerHTML=`<i class="fas fa-balance-scale"></i> Comparer <span class="compare-count">${compareList.length}</span>`;
+  }
+}
+
+function openCompare(){
+  if(compareList.length<2){showToast('Sélectionnez au moins 2 voitures','error');return}
+  const selected = compareList.map(id=>cars.find(c=>c.id===id)).filter(Boolean);
+  const content = document.getElementById('compareContent');
+  
+  let html = `<div class="compare-table-wrap"><table class="compare-table"><tr><th></th>`;
+  selected.forEach(c=>{
+    const icon = c.bodyType==='SUV'?'fa-caravan':c.bodyType==='Berline'?'fa-car':c.bodyType==='Citadine'?'fa-city':'fa-car';
+    html+=`<th class="car-col-name"><i class="fas ${icon}"></i> ${c.brand} ${c.model}</th>`;
+  });
+  html+=`</tr>`;
+
+  const specRows = [
+    {label:'Prix',key:'price',fmt:v=>formatPrice(v),higher:false},
+    {label:'Année',key:'year',fmt:v=>v,higher:true},
+    {label:'Moteur',key:'engine',fmt:v=>v},
+    {label:'Puissance',key:'horsepower',fmt:v=>v+' ch',higher:true},
+    {label:'Couple',key:'torque',fmt:v=>v+' Nm',higher:true},
+    {label:'Carburant',key:'fuelType',fmt:v=>v},
+    {label:'Transmission',key:'transmission',fmt:v=>v},
+    {label:'Traction',key:'drivetrain',fmt:v=>v},
+    {label:'Conso. (L/100km)',key:'fuelConsumption',fmt:v=>v>0?v+' L':'⚡',higher:false},
+    {label:'0-100 km/h',key:'acceleration',fmt:v=>v+' s',higher:false},
+    {label:'Vitesse max',key:'topSpeed',fmt:v=>v+' km/h',higher:true},
+    {label:'Places',key:'seats',fmt:v=>v,higher:true},
+    {label:'Coffre (L)',key:'trunk',fmt:v=>v+' L',higher:true},
+    {label:'Poids (kg)',key:'weight',fmt:v=>v+' kg',higher:false},
+  ];
+
+  specRows.forEach(row=>{
+    if(row.key==='model')return;
+    html+=`<tr><td>${row.label}</td>`;
+    const vals = selected.map(c=>typeof row.key==='function'?row.key(c):c[row.key]);
+    const isNumeric = vals.every(v=>typeof v==='number');
+    let bestIdx=-1,worstIdx=-1;
+    if(isNumeric && row.higher!==undefined){
+      if(row.higher){bestIdx=vals.indexOf(Math.max(...vals));worstIdx=vals.indexOf(Math.min(...vals))}
+      else {bestIdx=vals.indexOf(Math.min(...vals));worstIdx=vals.indexOf(Math.max(...vals))}
+    }
+    selected.forEach((c,i)=>{
+      const val = row.fmt(selected[i][row.key]);
+      let cls='';
+      if(i===bestIdx&&bestIdx===worstIdx)cls='';
+      else if(i===bestIdx)cls='best-val';
+      else if(i===worstIdx)cls='worst-val';
+      html+=`<td class="${cls}">${val}</td>`;
+    });
+    html+=`</tr>`;
+  });
+
+  // Features
+  html+=`<tr><td>Équipements</td>`;
+  selected.forEach(c=>{
+    const ftrs = c.features || [];
+    html+=`<td style="text-align:left;padding:0.5rem 0.75rem"><div style="display:flex;flex-wrap:wrap;gap:3px">${ftrs.map(f=>`<span style="font-size:0.6rem;background:var(--bg-primary);padding:2px 5px;border-radius:3px;white-space:nowrap">${f}</span>`).join('')}</div></td>`;
+  });
+  html+=`</tr>`;
+
+  // Ratings
+  html+=`<tr><td>Note globale</td>`;
+  selected.forEach(c=>{
+    const avg = (c.ratings.performance+c.ratings.comfort+c.ratings.safety+c.ratings.economy+c.ratings.value)/5;
+    html+=`<td><span class="best-val">${avg.toFixed(1)}</span> / 5</td>`;
+  });
+  html+=`</tr>`;
+
+  html+=`</table></div>`;
+  content.innerHTML=html;
+  document.getElementById('compareOverlay').classList.add('open');
+}
+
+function closeCompare(){
+  document.getElementById('compareOverlay').classList.remove('open');
+}
+
+// Detail view
+function showDetail(id){
+  const car = cars.find(c=>c.id===id);
+  if(!car)return;
+  addRecentlyViewed(id);
+  
+  const fe = car.fuelType;
+  const fcls = fe==='Essence'?'fuel-gasoline':fe==='Diesel'?'fuel-diesel':fe==='Électrique'?'fuel-electric':'fuel-hybrid';
+  const icon = car.bodyType==='SUV'?'fa-caravan':car.bodyType==='Berline'?'fa-car':car.bodyType==='Citadine'?'fa-city':car.bodyType==='Break'?'fa-truck':car.bodyType==='Coupé'?'fa-gem':car.bodyType==='Monospace'?'fa-shuttle-van':'fa-car';
+  
+  let html = `
+    <div class="detail-close"><button onclick="closeDetail()"><i class="fas fa-times"></i></button></div>
+    <div class="detail-content">
+      <div class="detail-header">
+        <div class="detail-title">
+          <h2>${car.brand} ${car.model}</h2>
+          <div class="detail-tags">
+            <span class="fuel-badge ${fcls}">${fe==='Électrique'?'⚡':fe==='Hybride'?'🔋':'⛽'} ${fe}</span>
+            <span class="fuel-badge" style="background:rgba(124,58,237,0.2);color:var(--purple-light)">${car.bodyType}</span>
+            <span class="fuel-badge" style="background:rgba(99,102,241,0.2);color:#818cf8">${car.transmission}</span>
+          </div>
+        </div>
+        <div class="detail-price"><span style="font-size:0.9rem;color:var(--text-secondary)">À partir de</span><br>${formatPrice(car.price)}</div>
+      </div>
+      <div class="detail-visual"><i class="fas ${icon}"></i></div>
+      <div class="detail-specs-grid">
+        ${[
+          {l:'Moteur',v:car.engine},
+          {l:'Puissance',v:car.horsepower+' ch'},
+          {l:'Couple',v:car.torque+' Nm'},
+          {l:'0-100 km/h',v:car.acceleration+' s'},
+          {l:'Vitesse max',v:car.topSpeed+' km/h'},
+          {l:'Consommation',v:car.fuelConsumption>0?car.fuelConsumption+' L/100km':'Électrique'},
+          {l:'Transmission',v:car.transmission},
+          {l:'Traction',v:car.drivetrain},
+          {l:'Places',v:car.seats},
+          {l:'Coffre',v:car.trunk+' L'},
+          {l:'Poids',v:car.weight+' kg'},
+          {l:'Année',v:car.year},
+        ].map(s=>`<div class="detail-spec"><div class="spec-label">${s.l}</div><div class="spec-value">${s.v}</div></div>`).join('')}
+      </div>
+      <h3 style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.5rem">Notes</h3>
+      <div class="detail-ratings">
+        ${[
+          {l:'Performance',k:'performance',cls:'rating-perf'},
+          {l:'Confort',k:'comfort',cls:'rating-comfort'},
+          {l:'Sécurité',k:'safety',cls:'rating-safety'},
+          {l:'Économie',k:'economy',cls:'rating-economy'},
+          {l:'Rapport Q/P',k:'value',cls:'rating-value'},
+        ].map(r=>`<div class="rating-bar"><div class="rating-label">${r.l}</div><div class="rating-bar-fill"><div class="${r.cls}" style="width:${car.ratings[r.k]/5*100}%"></div></div></div>`).join('')}
+      </div>
+      <div class="detail-features">
+        <h3><i class="fas fa-check-circle" style="color:var(--success)"></i> Équipements (${car.features.length})</h3>
+        <div class="detail-features-grid">
+          ${car.features.map(f=>`<span class="feature-tag"><i class="fas fa-check"></i> ${f}</span>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  
+  document.getElementById('detailModal').innerHTML = html;
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function closeDetail(){
+  document.getElementById('detailOverlay').classList.remove('open');
+}
+
+// Recently viewed
+function addRecentlyViewed(id){
+  recentlyViewed = recentlyViewed.filter(i=>i!==id);
+  recentlyViewed.unshift(id);
+  if(recentlyViewed.length>8)recentlyViewed=recentlyViewed.slice(0,8);
+  sessionStorage.setItem('recentlyViewed',JSON.stringify(recentlyViewed));
+  updateRecentlyViewed();
+}
+
+function updateRecentlyViewed(){
+  const bar = document.getElementById('recentBar');
+  const items = document.getElementById('recentItems');
+  if(recentlyViewed.length===0){bar.classList.remove('show');return}
+  bar.classList.add('show');
+  items.innerHTML = recentlyViewed.map(id=>{
+    const c = cars.find(car=>car.id===id);
+    if(!c)return '';
+    return `<span class="recent-chip" onclick="showDetail(${c.id})"><i class="fas fa-car"></i> ${c.brand} ${c.model}</span>`;
+  }).join('');
+}
+
+// Favorites
+function toggleFavorite(id){
+  const idx = favorites.indexOf(id);
+  if(idx===-1){
+    favorites.push(id);
+    showToast('Ajouté aux favoris ❤️','success');
+  } else {
+    favorites.splice(idx,1);
+    showToast('Retiré des favoris','error');
+  }
+  localStorage.setItem('carFavorites',JSON.stringify(favorites));
+  updateFavBadge();
+  filterCars();
+  renderFavPanel();
+}
+
+function updateFavBadge(){
+  document.getElementById('favCountBadge').textContent=favorites.length;
+}
+
+function openFavorites(){
+  renderFavPanel();
+  document.getElementById('favPanel').classList.add('open');
+  document.getElementById('favBackdrop').classList.add('show');
+}
+
+function closeFavorites(){
+  document.getElementById('favPanel').classList.remove('open');
+  document.getElementById('favBackdrop').classList.remove('show');
+}
+
+function renderFavPanel(){
+  const list = document.getElementById('favList');
+  if(favorites.length===0){
+    list.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text-muted)"><i class="far fa-heart" style="font-size:2rem;margin-bottom:0.5rem"></i><br>Aucun favori</div>`;
+    return;
+  }
+  list.innerHTML = favorites.map(id=>{
+    const c = cars.find(car=>car.id===id);
+    if(!c)return '';
+    const icon = c.bodyType==='SUV'?'fa-caravan':c.bodyType==='Berline'?'fa-car':c.bodyType==='Citadine'?'fa-city':'fa-car';
+    return `<div class="fav-panel-item" onclick="closeFavorites();showDetail(${c.id})">
+      <i class="fas ${icon} fav-icon"></i>
+      <div class="fav-info">
+        <div class="fav-name">${c.brand} ${c.model}</div>
+        <div class="fav-price">${formatPrice(c.price)}</div>
+      </div>
+      <span class="fav-remove" onclick="event.stopPropagation();toggleFavorite(${c.id})"><i class="fas fa-trash-alt"></i></span>
+    </div>`;
+  }).join('');
+}
+
+// Click outside close
+document.getElementById('detailOverlay').addEventListener('click',function(e){
+  if(e.target===this)closeDetail();
+});
+
+// Toast
+function showToast(msg,type='success'){
+  const t = document.getElementById('toast');
+  const m = document.getElementById('toastMsg');
+  t.className='toast';
+  if(type==='success')t.classList.add('toast-success');
+  else t.classList.add('toast-error');
+  m.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// Close compare on escape
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    closeDetail();
+    closeCompare();
+    closeFavorites();
+  }
+});
+
+// Init
+initFilters();
+filterCars();
+updateCompareUI();
+updateFavBadge();
+updateRecentlyViewed();
+</script>
+</body>
+</html>
