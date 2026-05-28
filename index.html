@@ -169,6 +169,72 @@ select:focus{outline:none;border-color:var(--purple-primary);box-shadow:0 0 0 3p
   cursor:pointer;
   box-shadow:0 0 8px var(--purple-glow)
 }
+.filter-features-row{
+  flex-direction:column;
+  align-items:stretch;
+  gap:0.4rem;
+  margin-top:0.25rem;
+  max-height:48px;
+  overflow:hidden;
+  transition:max-height 0.3s ease;
+}
+.filter-features-row.open{
+  max-height:400px;
+}
+.filter-features-toggle{
+  font-size:0.75rem;
+  color:var(--text-secondary);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.25rem 0;
+  user-select:none;
+}
+.filter-features-toggle:hover{
+  color:var(--purple-light);
+}
+.filter-features-toggle .toggle-icon{
+  font-size:0.6rem;
+  transition:transform 0.3s;
+}
+.filter-features-row.open .filter-features-toggle .toggle-icon{
+  transform:rotate(180deg);
+}
+.filter-features-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.35rem;
+}
+.filter-feature-item{
+  display:flex;
+  align-items:center;
+  gap:0.3rem;
+  font-size:0.7rem;
+  color:var(--text-secondary);
+  background:var(--bg-card);
+  padding:0.2rem 0.5rem;
+  border-radius:4px;
+  cursor:pointer;
+  transition:all 0.15s;
+  border:1px solid transparent;
+  user-select:none;
+}
+.filter-feature-item:hover{
+  border-color:var(--purple-glow);
+}
+.filter-feature-item.active{
+  background:var(--purple-primary);
+  color:#fff;
+  border-color:var(--purple-primary);
+}
+.filter-feature-item input{
+  display:none;
+}
+@media(max-width:600px){
+  .filter-features-grid{gap:0.25rem}
+  .filter-feature-item{font-size:0.65rem;padding:0.15rem 0.4rem}
+}
 .filter-badge{
   display:inline-flex;
   align-items:center;
@@ -849,6 +915,12 @@ select:focus{outline:none;border-color:var(--purple-primary);box-shadow:0 0 0 3p
       </div>
     </div>
   </div>
+  <div class="filter-row filter-features-row">
+    <div class="filter-features-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <i class="fas fa-cogs"></i> Équipements <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="filter-features-grid" id="featureFilters"></div>
+  </div>
 </section>
 
 <!-- Stats Bar -->
@@ -994,6 +1066,7 @@ const cars = [
 
 // Global state
 let compareList = [];
+let selectedFeatures = [];
 let favorites = JSON.parse(localStorage.getItem('carFavorites') || '[]');
 let recentlyViewed = JSON.parse(sessionStorage.getItem('recentlyViewed') || '[]');
 
@@ -1019,6 +1092,30 @@ function initFilters(){
     const o=document.createElement('option');
     o.value=b;o.textContent=b;sel.appendChild(o);
   });
+  initFeatureFilters();
+}
+
+function initFeatureFilters(){
+  // Collect all unique features sorted by frequency
+  const counts = {};
+  cars.forEach(c=>{(c.features||[]).forEach(f=>{counts[f]=(counts[f]||0)+1})});
+  const sorted = Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
+  const grid = document.getElementById('featureFilters');
+  grid.innerHTML = sorted.map(f=>
+    `<label class="filter-feature-item" onclick="event.stopPropagation();this.classList.toggle('active');const cb=this.querySelector('input');cb.checked=!cb.checked;cb.dispatchEvent(new Event('change'))">
+      <input type="checkbox" value="${f}" onchange="toggleFeatureFilter('${f}',this.checked)">
+      ${f}
+    </label>`
+  ).join('');
+}
+
+function toggleFeatureFilter(f,add){
+  if(add){
+    if(!selectedFeatures.includes(f)) selectedFeatures.push(f);
+  } else {
+    selectedFeatures = selectedFeatures.filter(x=>x!==f);
+  }
+  filterCars();
 }
 
 // Render car card
@@ -1077,6 +1174,10 @@ function filterCars(){
     if(fuel && c.fuelType!==fuel)return false;
     if(trans && c.transmission!==trans)return false;
     if(c.price>maxPrice)return false;
+    if(selectedFeatures.length>0){
+      const has = selectedFeatures.every(f=>(c.features||[]).includes(f));
+      if(!has)return false;
+    }
     return true;
   });
 
@@ -1196,13 +1297,20 @@ function openCompare(){
     html+=`</tr>`;
   });
 
-  // Features
-  html+=`<tr><td>Équipements</td>`;
-  selected.forEach(c=>{
-    const ftrs = c.features || [];
-    html+=`<td style="text-align:left;padding:0.5rem 0.75rem"><div style="display:flex;flex-wrap:wrap;gap:3px">${ftrs.map(f=>`<span style="font-size:0.6rem;background:var(--bg-primary);padding:2px 5px;border-radius:3px;white-space:nowrap">${f}</span>`).join('')}</div></td>`;
+  // Features — one row per feature with tick/cross per car
+  const allFeats = [...new Set(selected.flatMap(c=>c.features||[]))];
+  // Sort by global frequency
+  const featCounts = {};
+  cars.forEach(c=>{(c.features||[]).forEach(f=>{featCounts[f]=(featCounts[f]||0)+1})});
+  allFeats.sort((a,b)=>(featCounts[b]||0)-(featCounts[a]||0));
+  allFeats.forEach(feat=>{
+    html+=`<tr><td>${feat}</td>`;
+    selected.forEach(c=>{
+      const has = (c.features||[]).includes(feat);
+      html+=`<td class="${has?'best-val':'worst-val'}" style="text-align:center;font-size:1.1rem">${has?'✓':'✗'}</td>`;
+    });
+    html+=`</tr>`;
   });
-  html+=`</tr>`;
 
   // Ratings
   html+=`<tr><td>Note globale</td>`;
