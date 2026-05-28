@@ -1137,13 +1137,12 @@ function toggleCompare(id,add){
 }
 
 function updateCompareUI(){
-  document.getElementById('compareCount').textContent=compareList.length;
   const btn=document.getElementById('compareBtn');
   btn.disabled=compareList.length<2;
   if(compareList.length>=2){
-    btn.innerHTML=`<i class="fas fa-balance-scale"></i> Comparer (${compareList.length})`;
+    btn.innerHTML=`<i class="fas fa-balance-scale"></i> Comparer <span class="compare-count" id="compareCount">${compareList.length}</span>`;
   } else {
-    btn.innerHTML=`<i class="fas fa-balance-scale"></i> Comparer <span class="compare-count">${compareList.length}</span>`;
+    btn.innerHTML=`<i class="fas fa-balance-scale"></i> Comparer <span class="compare-count" id="compareCount">${compareList.length}</span>`;
   }
 }
 
